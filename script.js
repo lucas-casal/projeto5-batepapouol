@@ -1,7 +1,21 @@
-axios.defaults.headers.common['Authorization'] = 'mnAwsXuL5brrrSMP21IIYkpu';
+axios.defaults.headers.common['Authorization'] = 'Sz9geys35NfoLDyLNU8wOlUm';
 const feed = document.querySelector("#feed");
 const userOptions = document.querySelector(".contacts-options");
 var username = 0;
+var destinatary = "Todos";
+var MessageType = "message";
+var typeSelected = "Público";
+
+document.addEventListener("keypress", function(e){
+    if (e.key === "Enter"){ 
+        if (document.querySelector(".id-screen").classList.contains("hidden")){
+        message();
+        } else{ 
+        enterChat();
+        } 
+    }
+}
+)
 
 // entrar no chat e enviar o nome;
 function enterChat(){
@@ -14,6 +28,20 @@ function enterChat(){
         usernameSent
     );
 
+    promise.then(confirmUsername);
+    promise.catch(changeUsername);
+    function confirmUsername(){
+        const idScreen = document.querySelector(".id-screen");
+        idScreen.classList.add("hidden");
+    }
+
+    function changeUsername(){
+        const usernameBox = document.querySelector('#username');
+        usernameBox.value = '';
+        usernameBox.setAttribute("placeholder", "Por favor, insira outro nome")
+    }
+
+
     function stayOnline(){
         const promiseOnline = axios.post(
             "https://mock-api.driven.com.br/api/vm/uol/status",
@@ -22,12 +50,12 @@ function enterChat(){
     };
     setInterval(stayOnline, 5000);
 
-    const idScreen = document.querySelector(".id-screen");
-    idScreen.classList.add("hidden");
+
 }
     //
 
-    //envio de mensagem;
+
+    //gerador aleatório de id;
 function idGenerator(size) {
     var randomString = '';
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
@@ -38,84 +66,64 @@ function idGenerator(size) {
     return randomString;
 }
 
-
+// enviando mensagem
 function message(){
-    if (document.querySelector("#message-input").value !== ""){
-    const text = document.querySelector("#message-input").value;
-
-    function addZero(i){
-        if(i<10){
-            i="0"+i
-        }
-        return i;
+    if (typeSelected === "Público"){
+        messageType = "message";
+    } else {
+        messageType = "private_message";
     }
-    const sentBox = document.createElement("div");
-    sentBox.className = "text-box";
-    feed.appendChild(sentBox);
-
-    const header = document.createElement("span");
-    header.setAttribute('id', 'header')
-
-    const instant = new Date();
-    const hours = addZero(instant.getHours())
-    const minutes = addZero(instant.getMinutes());
-    const seconds = addZero(instant.getSeconds());
-    const sentAt = document.createElement("span");
-    sentAt.className = "time";
-    sentAt.innerHTML = "(" + hours + ":" + minutes + ":" + seconds + ")"  
-    header.appendChild(sentAt);
-
-    const sentFrom = document.createElement("span");
-    sentFrom.className = "names";
-    sentFrom.innerHTML = username;
-    header.appendChild(sentFrom);
-
-    const textingType = document.createElement("span");
-    textingType.className = "texting-type";
-    textingType.innerHTML = "para";
-    header.appendChild(textingType);
-
-    const sentTo = document.createElement("span");
-    sentTo.className = "names";
-    sentTo.innerHTML = "Amanda" + ":";
-    header.appendChild(sentTo);
-
-    const thisId = idGenerator(26);
-    const sentText = document.createElement("span");
-    sentText.setAttribute("id", thisId);
-    sentText.innerHTML = text;
-
-    sentBox.appendChild(header);
-    sentBox.appendChild(sentText);
-
-    var headerWidth = document.getElementById("header").offsetWidth;
-
-    var indent = headerWidth + 5 + "px";
-
-    document.getElementById(thisId).style.textIndent = indent;    
-     
-    } else{}
+    const messageWrote = document.querySelector("#message-input").value;
+    
+    if (message !== ""){
+    const messageSent={
+        from: username,
+        to: destinatary,
+        text: messageWrote,
+        type: messageType 
+        
+    };
+    const promise = axios.post(
+        "https://mock-api.driven.com.br/api/vm/uol/messages",
+        messageSent
+    );
+    searchMessages();
+} else{}
+document.querySelector("#message-input").value = '';
 }
 
 
 function searchMessages(){
     const promise = axios.get('https://mock-api.driven.com.br/api/vm/uol/messages');
     promise.then(processarResposta); 
-
+    promise.catch(reload);
     function processarResposta(resposta) {
-        console.log(resposta.data);
+
+
         for (i=0; i<resposta.data.length; i++){
             const receivedMessage = resposta.data[i];
-            console.log(receivedMessage);
+            var verifying = 0;
+            for (x=0; x<feed.children.length;x++){
+                if (receivedMessage.text === feed.children[x].children[1].innerText){
+                    verifying = -100;
+                } else{
+                    verifying++;
+                }
+            }
 
-            printMessages(receivedMessage);
-            
+            if (verifying === feed.children.length){
+                if (receivedMessage.from === username || receivedMessage.to === username || receivedMessage.type !== "private_message") {
+                    printMessages(receivedMessage);
+                    const lastMessageIndex = feed.children.length - 1;
+                    feed.children[lastMessageIndex].scrollIntoView()
+                }
+                
+            }
         }
-    }
+    };
 
     function printMessages(recebido){
         const messageBox = document.createElement("div");
-            
         messageBox.className = "text-box";
         feed.appendChild(messageBox);
 
@@ -135,9 +143,17 @@ function searchMessages(){
         messageFrom.innerText = recebido.from;
         header.appendChild(messageFrom);
 
+        var typeSent = 0;
+        if (recebido.type === "message"){
+            typeSent = "para";
+        } else {
+            typeSent = "reservadamente para"
+            messageBox.classList.add("private-box");
+        } 
+
         const textingType = document.createElement("span");
         textingType.className = "texting-type";
-        textingType.innerText = recebido.type;
+        textingType.innerText = typeSent;
         header.appendChild(textingType);
 
         const messageTo = document.createElement("span");
@@ -145,9 +161,16 @@ function searchMessages(){
         messageTo.innerText = recebido.to + ":";
         header.appendChild(messageTo);
 
+        if (recebido.type === "status"){
+            header.removeChild(textingType);
+            header.removeChild(messageTo);
+            messageBox.classList.add("status-box"); 
+        }
+
         const thisId = idGenerator(100);
         const messageText = document.createElement("span");
         messageText.setAttribute("id", thisId);
+        messageText.className = "texto"
         messageText.innerText = recebido.text;
 
         messageBox.appendChild(header);
@@ -156,8 +179,9 @@ function searchMessages(){
         const headerWidth = document.getElementById(headerId).offsetWidth;
 
         const indent = headerWidth + 5 + "px";
-        console.log(thisId)
         document.getElementById(thisId).style.textIndent = indent;
+
+    
     }
     
 }
@@ -170,13 +194,22 @@ function openContactsList(){
    
     contactsList.classList.add("show");
     contactsList.classList.remove("hide");
+    contactsList.classList.remove("hidden");
     temporaryBackground.classList.remove("hidden");
 }
 
 function backToChat(){
     contactsList.classList.remove("show");
     temporaryBackground.classList.add("hidden");
-    contactsList.classList.add("hide");    
+    contactsList.classList.add("hide");
+    function hiding(){
+        contactsList.classList.add("hidden")
+    }
+    setTimeout(hiding, 800); 
+}
+
+function reload(){
+    setTimeout(window.location.reload, 2000);
 }
 
 
@@ -248,11 +281,11 @@ function updateUsers(){
     
 }
 
-setInterval(updateUsers, 3000);
+setInterval(updateUsers, 10000);
 
 //
 
-
+updateUsers();
 
 
 
@@ -274,6 +307,7 @@ function selectedOptionUser(userOption){
     if (userOption.childElementCount === 3){    
     } else{
     userOption.appendChild(checkIcon);
+    destinatary = userOption.children[1].innerText;
     }
 }
 
@@ -290,14 +324,23 @@ function selectedOptionType(typeOption){
         }
 
     }
+
     if (typeOption.childElementCount === 3){    
     } else{
     typeOption.appendChild(checkIcon);
+    typeSelected = typeOption.children[1].innerText;
     }
-
-        
 }
 
+function updateLayoutWritingTo(){
+    const writingTo = document.querySelector(".writing-to");
+    if (typeSelected === "Público"){
+    writingTo.innerText = "Enviando para " + destinatary;
+    } else {
+        writingTo.innerText = "Enviando para " + destinatary + " (reservadamente)"
+    }
+}   
+setInterval (updateLayoutWritingTo, 500);
 // 
 
 

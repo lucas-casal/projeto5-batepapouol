@@ -18,11 +18,9 @@
   </div>
 </div>
 
-
 <div class= "ready-to-chat hidden" onclick="backToChat()"></div>
 
-
-<div class="contacts-list">
+<div class="contacts-list hidden">
   <div class="contacts-list-header"> 
     Escolha um contato 
     <br>
@@ -71,7 +69,10 @@
   <div class="bottom-bar">
     <div class="write-message">
       <input type="text" id="message-input" placeholder="Escreva aqui..." />
-    </div>
+      <div class="writing-to">
+        Enviando para
+      </div>
+    </div >
     <div class="send-message-box" onclick="message()">
       <img src="images/paper-plane-outline.svg" class="send-message-icon">
     </div>
