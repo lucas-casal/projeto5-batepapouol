@@ -30,22 +30,30 @@
   </div>
 
   <div class="contacts-options">
-    <div class="user-box" onclick="selectedOption(this)">
+    <div class="user-box" onclick="selectedOptionUser(this)">
       <img src="images/people.svg" class="contacts-list-icons">
-      Todos  
+      <span class="online-user-name">
+        Todos
+      </span> 
+      <img src="images/checkmark.svg" class="check" id="user-check-marked">  
     </div>
   </div>
 
   <div class="contacts-list-header chat-type-header">
     Escolha a visibilidade:
   </div>
-    <div class="user-box"  onclick="selectedOption(this)" id="public">
+    <div class="type-box"  onclick="selectedOptionType(this)" id="public">
       <img src="images/lock-open.svg" class="contacts-list-icons">
-      Público
+      <span class="online-user-name">
+        Público
+      </span> 
+      <img src="images/checkmark.svg" class="check" id="type-check-marked">
     </div>
-    <div class="user-box" onclick="selectedOption(this)" id="private">
+    <div class="type-box" onclick="selectedOptionType(this)" id="private">
       <img src="images/lock-closed.svg" class="contacts-list-icons">
-      Reservadamente
+      <span class="online-user-name">
+        Reservadamente
+      </span> 
     </div>
 
   </div>

@@ -152,6 +152,7 @@ input {
   line-height: 17px;
   width:auto;
   height:17px;
+
 }
 
 .names{
@@ -177,7 +178,7 @@ input {
   flex: 0 0 auto;
 }
 
-#header{
+.header{
   display:flex;
   flex-direction: row !important;
   justify-content: initial;
@@ -193,7 +194,7 @@ input {
   position: fixed;
   top: 0;
   left: 376px;
-  background-color: red;
+  background-color: white;
   width: 259px;
   height:667px;
   display: flex;
@@ -249,7 +250,6 @@ input {
 }
 
 .contacts-list-header{
-  background-color: aqua;
   height: 84px;
   width: 259px;
   display: flex;
@@ -264,22 +264,25 @@ input {
 }
 
 .contacts-options{
-  background-color: beige;
   width: 100%;
-  height: auto;
+  height: 200px;
   display:flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
+  overflow-y: scroll;
+  padding-top: 10px;
 }
 
 .contacts-list-icons{
 width: 24px;
 margin-right: 8px;
-
+display: flex;
+flex-direction: column;
+justify-content: center;
 }
 
 .user-box{
-  background-color: aquamarine;
   width: 225px;
   height: 36px;
   display: flex;
@@ -304,4 +307,18 @@ margin-right: 8px;
 
 .chat-type-header{
   height: 66px;
+}
+
+.type-box{
+  width: 225px;
+  height: 36px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  line-height: 19px;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: "roboto", sans-serif;
+  position: relative;
+  margin-bottom: 1px;
 }
