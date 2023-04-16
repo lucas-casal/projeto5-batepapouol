@@ -12,13 +12,13 @@
   <body>
 <div class="id-screen">
   <img src="images/logo.png" width="130px" class="intro-logo">
-  <input type="text" id="username" placeholder="Digite seu nome" />
-  <div id="enter-button" onclick="enterChat()"> 
+  <input type="text" id="username" placeholder="Digite seu nome" data-test="input-name" />
+  <div id="enter-button" onclick="enterChat()" data-test="send-name"> 
     Entrar 
   </div>
 </div>
 
-<div class= "ready-to-chat hidden" onclick="backToChat()"></div>
+<div class= "ready-to-chat hidden" onclick="backToChat()" data-test="overlay"></div>
 
 <div class="contacts-list hidden">
   <div class="contacts-list-header"> 
@@ -28,7 +28,7 @@
   </div>
 
   <div class="contacts-options">
-    <div class="user-box" onclick="selectedOptionUser(this)">
+    <div class="user-box" onclick="selectedOptionUser(this)" data-test="all">
       <img src="images/people.svg" class="contacts-list-icons">
       <span class="online-user-name">
         Todos
@@ -40,14 +40,14 @@
   <div class="contacts-list-header chat-type-header">
     Escolha a visibilidade:
   </div>
-    <div class="type-box"  onclick="selectedOptionType(this)" id="public">
+    <div class="type-box"  onclick="selectedOptionType(this)" id="public" data-test="public">
       <img src="images/lock-open.svg" class="contacts-list-icons">
       <span class="online-user-name">
         Público
       </span> 
       <img src="images/checkmark.svg" class="check" id="type-check-marked">
     </div>
-    <div class="type-box" onclick="selectedOptionType(this)" id="private">
+    <div class="type-box" onclick="selectedOptionType(this)" id="private" data-test="private">
       <img src="images/lock-closed.svg" class="contacts-list-icons">
       <span class="online-user-name">
         Reservadamente
@@ -62,18 +62,18 @@
   <div class="top-bar">
     <img src="images/logo.png" width="75px">
     <div class="icon-box">
-      <img src="images/people.svg" class="people-icon" onclick="openContactsList()">
+      <img src="images/people.svg" class="people-icon" onclick="openContactsList()" data-test="open-participants">
     </div>
   </div>
   <!--fecha o top-bar-->
   <div class="bottom-bar">
     <div class="write-message">
-      <input type="text" id="message-input" placeholder="Escreva aqui..." />
-      <div class="writing-to">
+      <input type="text" id="message-input" placeholder="Escreva aqui..." data-test="input-message" />
+      <div class="writing-to" data-test="recipient">
         Enviando para
       </div>
     </div >
-    <div class="send-message-box" onclick="message()">
+    <div class="send-message-box" onclick="message()" data-test="send-message">
       <img src="images/paper-plane-outline.svg" class="send-message-icon">
     </div>
   </div>

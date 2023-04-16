@@ -125,6 +125,7 @@ function searchMessages(){
     function printMessages(recebido){
         const messageBox = document.createElement("div");
         messageBox.className = "text-box";
+        messageBox.setAttribute("data-test", "message")
         feed.appendChild(messageBox);
 
         const headerId = idGenerator(26)
@@ -240,6 +241,7 @@ function updateUsers(){
             if (verifiedWith === userOptions.children.length){
                 const onlineUser = document.createElement("div");
                 onlineUser.className = "user-box";
+                onlineUser.setAttribute("data-test", "participant")
                 userOptions.appendChild(onlineUser);
                     
                 const onlineUserIcon = document.createElement("img");
@@ -295,6 +297,7 @@ function selectedOptionUser(userOption){
     const onlineUsersOptions = document.querySelectorAll(".user-box");
     checkIcon = document.createElement("img");
     checkIcon.setAttribute("src", "images/checkmark.svg")
+    checkIcon.setAttribute("data-test", "check")
     checkIcon.classList.add("check");
     checkIcon.setAttribute("id", "user-check-marked")
 
@@ -315,6 +318,7 @@ function selectedOptionType(typeOption){
     const onlineTypesOptions = document.querySelectorAll(".type-box");
     checkIcon = document.createElement("img");
     checkIcon.setAttribute("src", "images/checkmark.svg")
+    checkIcon.setAttribute("data-test", "check")
     checkIcon.classList.add("check");
     checkIcon.setAttribute("id", "type-check-marked")
 
