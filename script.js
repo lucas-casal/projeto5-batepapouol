@@ -5,6 +5,7 @@ var username = 0;
 var destinatary = "Todos";
 var MessageType = "message";
 var typeSelected = "Público";
+const usernames = [];
 
 document.addEventListener("keypress", function(e){
     if (e.key === "Enter"){ 
@@ -20,9 +21,21 @@ document.addEventListener("keypress", function(e){
 // entrar no chat e enviar o nome;
 function enterChat(){
     username = document.querySelector("#username").value;
+
     const usernameSent={
         name: username
     };
+    
+    function changeUsername(){
+        const usernameBox = document.querySelector('#username');
+        usernameBox.value = '';
+        usernameBox.setAttribute("placeholder", "Por favor, insira outro nome")
+    }
+
+    if (usernames.includes(username)){
+
+        changeUsername()
+    } else{
     const promise = axios.post(
         "https://mock-api.driven.com.br/api/vm/uol/participants",
         usernameSent
@@ -33,14 +46,8 @@ function enterChat(){
     function confirmUsername(){
         const idScreen = document.querySelector(".id-screen");
         idScreen.classList.add("hidden");
+        searchMessages();
     }
-
-    function changeUsername(){
-        const usernameBox = document.querySelector('#username');
-        usernameBox.value = '';
-        usernameBox.setAttribute("placeholder", "Por favor, insira outro nome")
-    }
-
 
     function stayOnline(){
         const promiseOnline = axios.post(
@@ -50,7 +57,7 @@ function enterChat(){
     };
     setInterval(stayOnline, 5000);
 
-
+}
 }
     //
 
@@ -220,7 +227,7 @@ function updateUsers(){
     const promise = axios.get("https://mock-api.driven.com.br/api/vm/uol/participants");
     promise.then(onlineUsers);
     function onlineUsers(resposta) {
-        const usernames = [];
+
         for (i=0; i<resposta.data.length; i++){
 
             const usernameFound = resposta.data[i].name;
@@ -244,9 +251,9 @@ function updateUsers(){
                 onlineUser.setAttribute("data-test", "participant")
                 userOptions.appendChild(onlineUser);
                     
-                const onlineUserIcon = document.createElement("img");
+                const onlineUserIcon = document.createElement("ion-icon");
                 onlineUserIcon.className = "contacts-list-icons";
-                onlineUserIcon.setAttribute("src", "images/person-circle.svg");
+                onlineUserIcon.setAttribute("name", "person-circle");
             
                 const onlineUserName = document.createElement("span");
                 onlineUserName.className = "online-user-name";
@@ -282,7 +289,7 @@ function updateUsers(){
 
     
 }
-
+setTimeout(updateUsers, 500);
 setInterval(updateUsers, 10000);
 
 //
@@ -295,8 +302,8 @@ updateUsers();
 
 function selectedOptionUser(userOption){
     const onlineUsersOptions = document.querySelectorAll(".user-box");
-    checkIcon = document.createElement("img");
-    checkIcon.setAttribute("src", "images/checkmark.svg")
+    checkIcon = document.createElement("ion-icon");
+    checkIcon.setAttribute("name", "checkmark")
     checkIcon.setAttribute("data-test", "check")
     checkIcon.classList.add("check");
     checkIcon.setAttribute("id", "user-check-marked")
@@ -316,8 +323,8 @@ function selectedOptionUser(userOption){
 
 function selectedOptionType(typeOption){
     const onlineTypesOptions = document.querySelectorAll(".type-box");
-    checkIcon = document.createElement("img");
-    checkIcon.setAttribute("src", "images/checkmark.svg")
+    checkIcon = document.createElement("ion-icon");
+    checkIcon.setAttribute("name", "checkmark")
     checkIcon.setAttribute("data-test", "check")
     checkIcon.classList.add("check");
     checkIcon.setAttribute("id", "type-check-marked")
@@ -346,7 +353,6 @@ function updateLayoutWritingTo(){
 }   
 setInterval (updateLayoutWritingTo, 500);
 // 
-
 
 /*
             const receivedMessage = resposta.data[i];

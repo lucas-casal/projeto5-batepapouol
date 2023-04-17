@@ -80,9 +80,13 @@
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
 }
 
+.people-icon{
+  font-size: 42px;
+}
 .icon-box{
   height: 32px;
   width:32px;
+  font-size: 20px;
 }
 
 .bottom-bar{
@@ -134,6 +138,7 @@ input {
   display: flex;
   align-items: center;
   margin-right: 20px;
+  font-size: 26px;
 }
 
 .send-message-icon{
@@ -292,6 +297,7 @@ span{
 .contacts-list-icons{
 width: 24px;
 margin-right: 8px;
+font-size: 23px;
 display: flex;
 flex-direction: column;
 justify-content: center;
@@ -317,7 +323,8 @@ justify-content: center;
   position: absolute;
   top: 10px;
   right: 11px;
-  color: green;
+  font-size: 9px;
+  color: #28BB25;
   width: 20px;
   height: 20px;
 }

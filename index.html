@@ -29,11 +29,11 @@
 
   <div class="contacts-options">
     <div class="user-box" onclick="selectedOptionUser(this)" data-test="all">
-      <img src="images/people.svg" class="contacts-list-icons">
+      <ion-icon name="people" class="contacts-list-icons"></ion-icon>
       <span class="online-user-name">
         Todos
       </span> 
-      <img src="images/checkmark.svg" class="check" id="user-check-marked">  
+      <ion-icon name="checkmark" class="check" id="user-check-marked" data-test="check"></ion-icon> 
     </div>
   </div>
 
@@ -41,14 +41,14 @@
     Escolha a visibilidade:
   </div>
     <div class="type-box"  onclick="selectedOptionType(this)" id="public" data-test="public">
-      <img src="images/lock-open.svg" class="contacts-list-icons">
+      <ion-icon name="lock-open" class="contacts-list-icons"></ion-icon>
       <span class="online-user-name">
         Público
       </span> 
-      <img src="images/checkmark.svg" class="check" id="type-check-marked">
+      <ion-icon name="checkmark" class="check" id="type-check-marked" data-test="check"></ion-icon>
     </div>
     <div class="type-box" onclick="selectedOptionType(this)" id="private" data-test="private">
-      <img src="images/lock-closed.svg" class="contacts-list-icons">
+      <ion-icon name="lock-closed" class="contacts-list-icons"></ion-icon>
       <span class="online-user-name">
         Reservadamente
       </span> 
@@ -62,7 +62,7 @@
   <div class="top-bar">
     <img src="images/logo.png" width="75px">
     <div class="icon-box">
-      <img src="images/people.svg" class="people-icon" onclick="openContactsList()" data-test="open-participants">
+      <ion-icon name="people" class="people-icon" onclick="openContactsList()" data-test="open-participants"></ion-icon>
     </div>
   </div>
   <!--fecha o top-bar-->
@@ -74,13 +74,13 @@
       </div>
     </div >
     <div class="send-message-box" onclick="message()" data-test="send-message">
-      <img src="images/paper-plane-outline.svg" class="send-message-icon">
+      <ion-icon name="paper-plane-outline" class="send-message-icon"></ion-icon>
     </div>
   </div>
 </div>  
 <!--fecha o screen-background-->
 
-
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="script.js"></script>
 </body>
