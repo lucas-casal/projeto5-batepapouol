@@ -47,6 +47,7 @@ function enterChat(){
         const idScreen = document.querySelector(".id-screen");
         idScreen.classList.add("hidden");
         searchMessages();
+        setInterval(searchMessages, 3000);
     }
 
     function stayOnline(){
@@ -186,7 +187,7 @@ function searchMessages(){
     
     }
 }
-setInterval(searchMessages, 3000);
+
 
 const temporaryBackground = document.querySelector(".ready-to-chat");
 const contactsList = document.querySelector(".contacts-list");
