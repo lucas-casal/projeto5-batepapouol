@@ -354,3 +354,9 @@ justify-content: center;
 .private-box{
   background-color: #FFDEDE;
 }
+
+.text-box{
+  display: flex;
+  flex-wrap: wrap;
+  word-wrap: break-word;
+}

@@ -123,6 +123,7 @@ function searchMessages(){
         const messageBox = document.createElement("div");
         messageBox.className = "text-box";
         messageBox.setAttribute("data-test", "message")
+        
         feed.appendChild(messageBox);
 
         const headerId = idGenerator(26)
@@ -140,6 +141,9 @@ function searchMessages(){
         messageFrom.className = "names";
         messageFrom.innerText = recebido.from;
         header.appendChild(messageFrom);
+        
+        const boxText = header.innerText + recebido.text;
+        messageBox.setAttribute("p", boxText)
 
         var typeSent = 0;
         if (recebido.type === "message"){
@@ -209,7 +213,7 @@ function backToChat(){
 }
 
 function reload(){
-    setTimeout(window.location.reload);
+   window.location.reload();
 }
 
 
