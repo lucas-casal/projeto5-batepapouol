@@ -7,6 +7,7 @@ var MessageType = "message";
 var typeSelected = "Público";
 const usernames = [];
 
+
 document.addEventListener("keypress", function(e){
     if (e.key === "Enter"){ 
         if (document.querySelector(".id-screen").classList.contains("hidden")){
@@ -36,34 +37,31 @@ function enterChat(){
 
         changeUsername()
     } else{
-    const promise = axios.post(
-        "https://mock-api.driven.com.br/api/vm/uol/participants",
-        usernameSent
-    );
-
-    promise.then(confirmUsername);
-    promise.catch(changeUsername);
-    function confirmUsername(){
-        const idScreen = document.querySelector(".id-screen");
-        idScreen.classList.add("hidden");
-        searchMessages();
-        setInterval(searchMessages, 3000);
-    }
-
-    function stayOnline(){
-        const promiseOnline = axios.post(
-            "https://mock-api.driven.com.br/api/vm/uol/status",
+        const promise = axios.post(
+            "https://mock-api.driven.com.br/api/vm/uol/participants",
             usernameSent
         );
-    };
-    setInterval(stayOnline, 5000);
 
+        promise.then(confirmUsername);
+        promise.catch(changeUsername);
+        function confirmUsername(){
+            const idScreen = document.querySelector(".id-screen");
+            idScreen.classList.add("hidden");
+            searchMessages();
+            setInterval(searchMessages, 3000);
+        }
+
+        function stayOnline(){
+            const promiseOnline = axios.post(
+                "https://mock-api.driven.com.br/api/vm/uol/status",
+                usernameSent
+            );
+        };
+        setInterval(stayOnline, 5000);
+    }
 }
-}
-    //
 
 
-    //gerador aleatório de id;
 function idGenerator(size) {
     var randomString = '';
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
@@ -96,8 +94,8 @@ function message(){
         messageSent
     );
     searchMessages();
-} else{}
-document.querySelector("#message-input").value = '';
+    } else{}
+    document.querySelector("#message-input").value = '';
 }
 
 
@@ -211,7 +209,7 @@ function backToChat(){
 }
 
 function reload(){
-    setTimeout(window.location.reload, 2000);
+    setTimeout(window.location.reload);
 }
 
 
@@ -242,7 +240,6 @@ function updateUsers(){
             if (verifiedWith === userOptions.children.length){
                 const onlineUser = document.createElement("div");
                 onlineUser.className = "user-box";
-                onlineUser.setAttribute("data-test", "participant")
                 userOptions.appendChild(onlineUser);
                     
                 const onlineUserIcon = document.createElement("ion-icon");
@@ -251,6 +248,7 @@ function updateUsers(){
             
                 const onlineUserName = document.createElement("span");
                 onlineUserName.className = "online-user-name";
+                onlineUser.setAttribute("data-test", "participant")
                 onlineUserName.innerText = verify;
             
                 onlineUser.appendChild(onlineUserIcon);
