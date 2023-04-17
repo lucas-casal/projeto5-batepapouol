@@ -104,28 +104,19 @@ function searchMessages(){
     const promise = axios.get('https://mock-api.driven.com.br/api/vm/uol/messages');
     promise.then(processarResposta); 
     promise.catch(reload);
+
     function processarResposta(resposta) {
-
-
+        console.log(resposta.data)
+        feed.innerHTML = '';
         for (i=0; i<resposta.data.length; i++){
             const receivedMessage = resposta.data[i];
-            var verifying = 0;
-            for (x=0; x<feed.children.length;x++){
-                if (receivedMessage.text === feed.children[x].children[1].innerText){
-                    verifying = -100;
-                } else{
-                    verifying++;
-                }
+            if (receivedMessage.from === username || receivedMessage.to === username || receivedMessage.type !== "private_message") {
+                printMessages(receivedMessage);
+                const lastMessageIndex = feed.children.length - 1;
+                feed.children[lastMessageIndex].scrollIntoView()
             }
-
-            if (verifying === feed.children.length){
-                if (receivedMessage.from === username || receivedMessage.to === username || receivedMessage.type !== "private_message") {
-                    printMessages(receivedMessage);
-                    const lastMessageIndex = feed.children.length - 1;
-                    feed.children[lastMessageIndex].scrollIntoView()
-                }
                 
-            }
+            
         }
     };
 
@@ -172,6 +163,9 @@ function searchMessages(){
         if (recebido.type === "status"){
             header.removeChild(textingType);
             header.removeChild(messageTo);
+            if(messageBox.classList.contains("private-box")){
+                messageBox.classList.remove("private-box")
+            }
             messageBox.classList.add("status-box"); 
         }
 
@@ -191,7 +185,6 @@ function searchMessages(){
 
     
     }
-    
 }
 setInterval(searchMessages, 3000);
 
@@ -227,7 +220,7 @@ function updateUsers(){
     const promise = axios.get("https://mock-api.driven.com.br/api/vm/uol/participants");
     promise.then(onlineUsers);
     function onlineUsers(resposta) {
-
+        console.log(resposta.data)
         for (i=0; i<resposta.data.length; i++){
 
             const usernameFound = resposta.data[i].name;
